@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+{% block head %}
+<head>
+    <title>{{ title }}</title>
+    <meta name="description" content="website description"/>
+    <meta name="keywords" content="website keywords, website keywords"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+{% endblock %}
+<body>
+<div id="main">
+    <div id="header">
+        <div id="logo">
+            <div id="logo_text">
+                <h1>Мой блог!</h1>
+                <h2>Привет, {{ current_user.username }}!</h2>
+            </div>
+        </div>
+        <div id="menubar">
+            <ul id="menu">
+                <li class="selected">
+                    <a href="{{url_for('main.index') }}">Главная</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="selected">
+                    <a href="{{ url_for('users.account') }}"><i class="fa fa-user"></i>Профиль</a>
+                    <a href="{{ url_for('posts.all_post') }}"><i class="fa fa-user"></i>Посты</a>
+                    <a href="{{ url_for('posts.new_post') }}"><i class="fa fa-user"></i>Новый пост +</a>
+                    <a href="{{ url_for('users.logout') }}"><i class="fa fa-user"></i>Выйти</a>
+                </li>
+                {% else %}
+                <li class="selected">
+                    <a href="{{url_for('users.register') }}">Зарегистрироваться</a>
+                    <a href="{{url_for('users.login') }}">Войти</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id="site_content">
+        <div class="sidebar">
+            <h3>Последние записи блога</h3>
+            <h4>Блог создан</h4>
+            <h5>17 июня 2022 года</h5>
+            <p>Здесь размещена карточка-заготовка для дальнейших записей<br/><a
+                    href="#">Читать дальше</a></p>
+            <p></p>
+            <h3>Искать</h3>
+            <form method="post" action="#" id="search_form">
+                <p>
+                    <input class="search" type="text" name="search_field" value="Введите запрос..."/>
+                    <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;"
+                           src="../static/styles/search.png"
+                           alt="Search" title="Search"/>
+                </p>
+            </form>
+        </div>
+
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <div id="footer">
+        Copyright &copy; Александр Болотов | <a href="https://github.com/alexabolot1">GitHub</a> | <a
+            href="https://vk.com/alexabolot">VK</a> | <a
+            href="https://t.me/alexabolot">Telegram</a>
+    </div>
+</div>
+</body>
+</html>

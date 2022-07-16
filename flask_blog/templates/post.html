@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <article class="media" style="display: flex; flex-direction: column;">
+        <img class="rounded-circle article-img" style="margin-right: 5px;"
+             src="{{ url_for('static', filename='profile_pics/' +
+		post.author.image_file) }}">
+        <a class="mr-2" href="{{ url_for('users.user_posts',
+		username=post.author.username) }}" style="margin: 0
+	auto">{{ post.author.username }}</a>
+    </article>
+    <h4 class="card-title">{{ post.title }}</h4>
+    <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
+    <br>
+    <br>
+    <p>{{ post.content }}</p>
+    {% if post.author == current_user %}
+    <a href="{{ url_for('posts.update_post', post_id=post.id) }}">Редактировать</a>
+    <br>
+    <br>
+    <a href="{{ url_for('posts.delete_post', post_id=post.id) }}">Удалить</a>
+    {% endif %}
+</div>
+{% endblock content %}
